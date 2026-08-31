@@ -1,0 +1,67 @@
+#apartment{
+    font-size:20px;
+}
+
+#product_code{
+    font-size:20px;
+}
+
+#btnAdd{
+    margin-top:10px;
+}
+
+#product-list td{
+    vertical-align:middle;
+}
+
+#search-result{
+    max-height:420px;
+    overflow:auto;
+}
+
+#cart-body{
+    max-height:420px;
+    overflow:auto;
+}
+
+#footer-bar{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    background:#fff;
+
+    border-top:1px solid #ddd;
+
+    padding:12px 20px;
+
+    z-index:9999;
+
+}
+
+#dtmobilepos{
+
+    padding-bottom:90px;
+
+}
+
+@media (max-width:768px){
+
+    #footer-bar{
+
+        padding:10px;
+
+    }
+
+    #btn-create-order{
+
+        width:100%;
+
+    }
+
+}

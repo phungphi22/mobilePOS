@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>dtmobilepos</name>
+	<displayName><![CDATA[DT Mobile POS]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Mobile POS for PrestaShop 1.6]]></description>
+	<author><![CDATA[DT]]></author>
+	<tab><![CDATA[administration]]></tab>
+	<is_configurable>0</is_configurable>
+	<need_instance>0</need_instance>
+	<limited_countries></limited_countries>
+</module>

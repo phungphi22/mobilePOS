@@ -1,0 +1,5 @@
+﻿Tên căn hộ: bệ nguyên vào lastname và email (lỗi nếu có dấu _)
+company: "Tên chung cư (tên phố) . Tên Tòa nhà (ngõ/nghách/hẻm)"
+Các định dạng chấp nhận: "Tên chung cư (tên phố) . Tên Tòa nhà (ngõ/nghách/hẻm) . Số căn hộ (số nhà)"
+- Vin.A2.2208
+- hàm nghi.hẻm 200/27/48.Số 12
