@@ -136,7 +136,46 @@
             </table>
 
         </div>
+<!-- Begin Upgrade -->
+	<div class="panel">
+		<h3>
+			<i class="icon-tag"></i>
+			Giảm giá
+		</h3>
 
+		<div class="form-group">
+			<label for="discount-amount">
+				Số tiền giảm
+			</label>
+
+			<div class="input-group">
+				<input
+					type="number"
+					id="discount-amount"
+					class="form-control"
+					min="0"
+					step="1"
+					value=""
+					placeholder="Ví dụ: 50000">
+
+				<span class="input-group-btn">
+					<button
+						type="button"
+						id="btn-apply-discount"
+						class="btn btn-primary">
+						<i class="icon-check"></i>
+						Áp dụng
+					</button>
+				</span>
+			</div>
+
+			<p class="help-block">
+				Nhập số tiền giảm bằng VNĐ.
+				Nhập 0 để bỏ giảm giá.
+			</p>
+		</div>
+	</div>
+<!-- End Upgrade -->
         <div class="panel">
 
             <h3>
@@ -203,17 +242,21 @@
 
         <div class="col-xs-6 text-right">
 
-            <button
+           <button
+				id="btn-create-order"
+				type="button"
+				class="btn btn-success btn-lg">
+				<i class="icon-check"></i>
+				Tạo đơn
+			</button>
 
-                id="btn-create-order"
-
-                class="btn btn-success btn-lg">
-
-                <i class="icon-check"></i>
-
-                Tạo đơn
-
-            </button>
+			<button
+				id="btn-order-list"
+				type="button"
+				class="btn btn-default btn-lg">
+				<i class="icon-list"></i>
+				Danh sách đơn
+			</button>
 
         </div>
 
@@ -224,4 +267,5 @@
 </div>
 <script>
 var dtmobilepos_ajax = '{$ajax_url|escape:'javascript'}';
+var dtmobilepos_orders_url = '{$orders_url|escape:'javascript'}';
 </script>

@@ -13,9 +13,10 @@ class AdminDtMobilePosController extends ModuleAdminController
     {
         parent::initContent();
 
-        $this->context->smarty->assign(array(
-            'ajax_url' => self::$currentIndex.'&token='.$this->token.'&ajax=1'
-        ));
+       $this->context->smarty->assign(array(
+			'ajax_url'   => self::$currentIndex.'&token='.$this->token.'&ajax=1',
+			'orders_url' => $this->context->link->getAdminLink('AdminOrders')
+		));
 
         $this->content = $this->module->display(
             $this->module->getLocalPath(),
@@ -53,16 +54,18 @@ class AdminDtMobilePosController extends ModuleAdminController
             'data'    => $result->getData()
         )));
     }
-
-    public function ajaxProcessSearchProduct()
+	//Upgrade
+     public function ajaxProcessSearchProduct()
     {
         $this->loadBusiness();
 
         $result = QuickAction::searchProduct(
-            Tools::getValue('keyword')
+            Tools::getValue('keyword'),
+            (int)Tools::getValue('id_cart')
         );
 
         if ($result->isSuccess()) {
+
             $rows = array();
 
             foreach ($result->getData() as $p) {
@@ -157,6 +160,39 @@ class AdminDtMobilePosController extends ModuleAdminController
             QuickAction::createOrder(
                 (int)Tools::getValue('id_cart'),
                 Tools::getValue('apartment')
+            )
+        );
+    }
+	//upgrade
+	    /**
+     * Áp dụng / thay đổi / bỏ giảm giá.
+     */
+    public function ajaxProcessSetDiscount()
+    {
+        $this->loadBusiness();
+
+        $amount = (float)Tools::getValue(
+            'discount_amount'
+        );
+
+        $this->jsonResult(
+            QuickAction::setDiscount(
+                (int)Tools::getValue('id_cart'),
+                $amount
+            )
+        );
+    }
+
+    /**
+     * Xóa Cart mới khi người dùng rời Mobile POS.
+     */
+    public function ajaxProcessDeleteCart()
+    {
+        $this->loadBusiness();
+
+        $this->jsonResult(
+            QuickAction::deleteCart(
+                (int)Tools::getValue('id_cart')
             )
         );
     }

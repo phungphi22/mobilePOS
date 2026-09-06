@@ -71,7 +71,62 @@ function bindEvents()
 		createOrder();
 
 	});
+	
+	$('#btn-order-list').off('click').on('click', function () {
+		goToOrderList();
+	});
+	
+	$('#btn-apply-discount').off('click').on('click', function () {
 
+		setDiscount();
+
+	});
+	$('#discount-amount').off('keypress').on('keypress', function (e) {
+
+		if (e.which == 13) {
+
+			setDiscount();
+
+		}
+
+	});
+}
+
+function goToOrderList()
+{
+    if (!window.dtCartId) {
+        window.location.href = dtmobilepos_orders_url;
+        return;
+    }
+
+    var $button = $('#btn-order-list');
+
+    $button.prop('disabled', true);
+
+    $.ajax({
+        url: dtmobilepos_ajax,
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            ajax: 1,
+            action: 'DeleteCart',
+            id_cart: window.dtCartId
+        },
+        success: function (json) {
+            if (!json.success) {
+                alert(json.message || 'Không thể xóa giỏ hàng.');
+                $button.prop('disabled', false);
+                return;
+            }
+
+            window.location.href = dtmobilepos_orders_url;
+        },
+        error: function (xhr) {
+            console.log('DeleteCart error:', xhr.responseText);
+            alert('Không thể kết nối để xóa giỏ hàng.');
+            $button.prop('disabled', false);
+        }
+    });
 }
 
 function searchProduct()
@@ -96,15 +151,12 @@ function searchProduct()
 
         dataType: 'json',
 
-        data: {
-
-            ajax: 1,
-
-            action: 'SearchProduct',
-
-            keyword: keyword
-
-        },
+       data: {
+			ajax: 1,
+			action: 'SearchProduct',
+			keyword: keyword,
+			id_cart: window.dtCartId || 0
+		},
 
         success: function (json) {
 
@@ -165,7 +217,7 @@ function addProduct(idProduct)
 			**************/
 
 			refreshSummary();
-
+			searchProduct();
         },
 
         error: function () {
@@ -269,6 +321,132 @@ function refreshSummary()
         error: function () {
 
             alert('Lỗi Summary');
+
+        }
+
+    });
+}
+
+function setDiscount()
+{
+    var value = $.trim(
+        $('#discount-amount').val()
+    );
+
+    /*
+     * Nếu để trống thì coi như không giảm.
+     */
+    if (value === '') {
+        value = '0';
+    }
+
+    /*
+     * Chuyển sang số.
+     */
+    var amount = parseFloat(value);
+
+    /*
+     * Kiểm tra dữ liệu nhập.
+     */
+    if (isNaN(amount) || amount < 0) {
+
+        alert('Số tiền giảm không hợp lệ.');
+
+        $('#discount-amount').focus();
+
+        return;
+    }
+
+    /*
+     * Không cho số tiền giảm có quá nhiều chữ số thập phân.
+     * Đây là tiền VNĐ nên chỉ dùng số nguyên.
+     */
+    amount = Math.round(amount);
+
+    /*
+     * Kiểm tra Cart hiện tại.
+     */
+    if (!window.dtCartId) {
+
+        alert('Chưa có giỏ hàng.');
+
+        return;
+    }
+
+    var $button = $('#btn-apply-discount');
+
+    /*
+     * Khóa nút trong lúc gửi AJAX.
+     *
+     * Rất quan trọng khi dùng trên mobile:
+     * tránh người dùng chạm 2-3 lần liên tiếp
+     * và tạo nhiều yêu cầu giảm giá.
+     */
+    $button.prop('disabled', true);
+
+    $.ajax({
+
+        url: dtmobilepos_ajax,
+
+        type: 'POST',
+
+        dataType: 'json',
+
+        data: {
+
+            ajax: 1,
+
+            action: 'SetDiscount',
+
+            id_cart: window.dtCartId,
+
+            discount_amount: amount
+
+        },
+
+        success: function (json) {
+
+            if (!json.success) {
+
+                alert(
+                    json.message ||
+                    'Không thể áp dụng giảm giá.'
+                );
+
+                return;
+            }
+
+            /*
+             * KHÔNG tự tính:
+             *
+             * total = total - amount
+             *
+             * Vì tổng tiền phải do Cart của
+             * PrestaShop tính.
+             */
+            refreshSummary();
+
+        },
+
+        error: function (xhr) {
+
+            console.log(
+                'SetDiscount error:',
+                xhr.responseText
+            );
+
+            alert(
+                'Không thể kết nối để áp dụng giảm giá.'
+            );
+
+        },
+
+        complete: function () {
+
+            /*
+             * Cho phép bấm lại sau khi AJAX xong.
+             */
+            $button.prop('disabled', false);
 
         }
 
@@ -490,7 +668,7 @@ function updateQuantity(idProduct, quantity)
             }
 
             refreshSummary();
-
+			searchProduct();
         },
 
         error: function () {
@@ -553,7 +731,7 @@ function removeProduct(idProduct)
             }
 
             refreshSummary();
-
+			searchProduct();
         },
 
         error:function(){
