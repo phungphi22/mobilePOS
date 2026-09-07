@@ -169,24 +169,22 @@ class QuickAction extends QuickObject
         /** @var Order $order */
         $order = $result->getData();
 
-        /*
-         * Bây giờ đã có id_order.
-         *
-         * Đổi tên:
-         * giam_<số căn>_<id_order>
-         */
-        if ($idCartRule > 0) {
-
-            if (!QuickCart::finalizeDiscountName(
-                $idCartRule,
-                $order,
-                $apartment
-            )) {
-                return QuickResult::error(
-                    'Đơn đã tạo nhưng không thể cập nhật tên giảm giá.'
-                );
-            }
-        }
+      /*
+		 * Bây giờ đã có id_order.
+		 *
+		 * Đổi tên giảm giá:
+		 * Giam_#<id_order>
+		 */
+		if ($idCartRule > 0) {
+			if (!QuickCart::finalizeDiscountName(
+				$idCartRule,
+				$order
+			)) {
+				return QuickResult::error(
+					'Đơn đã tạo nhưng không thể cập nhật tên giảm giá.'
+				);
+			}
+		}
 
         return QuickResult::success(array(
             'id_order'  => (int)$order->id,
@@ -284,28 +282,32 @@ class QuickAction extends QuickObject
      * @param int $idCart
      * @return QuickResult
      */
-   public static function deleteCart($idCart)
+	  public static function deleteCart($idCart)
 	{
 		$idCart = (int)$idCart;
 
 		if ($idCart <= 0) {
-			throw new Exception('Giỏ hàng không hợp lệ.');
+			return QuickResult::error('Giỏ hàng không hợp lệ.');
 		}
 
 		$cart = new Cart($idCart);
 
 		if (!Validate::isLoadedObject($cart)) {
-			throw new Exception('Không tìm thấy giỏ hàng.');
+			return QuickResult::error('Không tìm thấy giỏ hàng.');
 		}
 
 		if ($cart->OrderExists()) {
-			throw new Exception('Giỏ hàng đã được tạo đơn, không thể xóa.');
+			return QuickResult::error(
+				'Giỏ hàng đã được tạo đơn, không thể xóa.'
+			);
 		}
 
 		if (!$cart->delete()) {
-			throw new Exception('Không thể xóa giỏ hàng.');
+			return QuickResult::error(
+				'Không thể xóa giỏ hàng.'
+			);
 		}
 
-		return true;
+		return QuickResult::success(true);
 	}
 }
