@@ -284,28 +284,32 @@ class QuickAction extends QuickObject
      * @param int $idCart
      * @return QuickResult
      */
-   public static function deleteCart($idCart)
+	  public static function deleteCart($idCart)
 	{
 		$idCart = (int)$idCart;
 
 		if ($idCart <= 0) {
-			throw new Exception('Giỏ hàng không hợp lệ.');
+			return QuickResult::error('Giỏ hàng không hợp lệ.');
 		}
 
 		$cart = new Cart($idCart);
 
 		if (!Validate::isLoadedObject($cart)) {
-			throw new Exception('Không tìm thấy giỏ hàng.');
+			return QuickResult::error('Không tìm thấy giỏ hàng.');
 		}
 
 		if ($cart->OrderExists()) {
-			throw new Exception('Giỏ hàng đã được tạo đơn, không thể xóa.');
+			return QuickResult::error(
+				'Giỏ hàng đã được tạo đơn, không thể xóa.'
+			);
 		}
 
 		if (!$cart->delete()) {
-			throw new Exception('Không thể xóa giỏ hàng.');
+			return QuickResult::error(
+				'Không thể xóa giỏ hàng.'
+			);
 		}
 
-		return true;
+		return QuickResult::success(true);
 	}
 }

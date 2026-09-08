@@ -668,7 +668,7 @@ function updateQuantity(idProduct, quantity)
             }
 
             refreshSummary();
-			searchProduct();
+			
         },
 
         error: function () {
