@@ -554,22 +554,16 @@ class QuickCart extends QuickObject
     }
 
     /**
-     * Đổi tên CartRule sau khi đã có Order.
-     *
-     * Tên:
-     * giam_<so_can>_<id_order>
-     *
-     * Đồng thời cập nhật tên trong order_cart_rule.
-     *
-     * @param int $idCartRule
-     * @param Order $order
-     * @param string $apartment
-     * @return bool
-     */
+	 * Đổi tên CartRule sau khi đã có Order.
+	 *
+	 * Tên:
+	 * Giam_#<id_order>
+	 *
+	 * Đồng thời cập nhật tên trong order_cart_rule.
+	 */
     public static function finalizeDiscountName(
-        $idCartRule,
-        Order $order,
-        $apartment
+       $idCartRule,
+		Order $order
     ) {
         $idCartRule = (int)$idCartRule;
 
@@ -583,7 +577,7 @@ class QuickCart extends QuickObject
             return false;
         }
 
-        $parts = explode('.', trim($apartment));
+        //$parts = explode('.', trim($apartment));
 
         /*
          * Với cấu trúc:
@@ -591,19 +585,15 @@ class QuickCart extends QuickObject
          *
          * phần cuối chính là số căn.
          */
-        $apartmentNumber = trim(
+        /* $apartmentNumber = trim(
             $parts[count($parts) - 1]
         );
 
         if ($apartmentNumber === '') {
             $apartmentNumber = trim($apartment);
-        }
+        } */
 
-        $finalName =
-            'giam_'
-            .$apartmentNumber
-            .'_'
-            .(int)$order->id;
+       $finalName = 'Giam_#'.(int)$order->id;
 
         /*
          * CartRule là multilang nên cập nhật tất cả ngôn ngữ.

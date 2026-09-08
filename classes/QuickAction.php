@@ -169,24 +169,22 @@ class QuickAction extends QuickObject
         /** @var Order $order */
         $order = $result->getData();
 
-        /*
-         * Bây giờ đã có id_order.
-         *
-         * Đổi tên:
-         * giam_<số căn>_<id_order>
-         */
-        if ($idCartRule > 0) {
-
-            if (!QuickCart::finalizeDiscountName(
-                $idCartRule,
-                $order,
-                $apartment
-            )) {
-                return QuickResult::error(
-                    'Đơn đã tạo nhưng không thể cập nhật tên giảm giá.'
-                );
-            }
-        }
+      /*
+		 * Bây giờ đã có id_order.
+		 *
+		 * Đổi tên giảm giá:
+		 * Giam_#<id_order>
+		 */
+		if ($idCartRule > 0) {
+			if (!QuickCart::finalizeDiscountName(
+				$idCartRule,
+				$order
+			)) {
+				return QuickResult::error(
+					'Đơn đã tạo nhưng không thể cập nhật tên giảm giá.'
+				);
+			}
+		}
 
         return QuickResult::success(array(
             'id_order'  => (int)$order->id,
