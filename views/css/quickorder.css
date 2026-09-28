@@ -44,24 +44,6 @@
 
 }
 
-#footer-bar .footer-actions{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:10px;
-
-}
-
-#footer-bar .footer-actions button{
-
-    flex:1;
-
-}
-
 #dtmobilepos{
 
     padding-bottom:90px;
@@ -76,23 +58,9 @@
 
     }
 
-    #footer-bar .footer-actions{
-
-        display:flex;
+    #btn-create-order{
 
         width:100%;
-
-        gap:10px;
-
-    }
-
-    #footer-bar .footer-actions button{
-
-        width:50%;
-
-        flex:1;
-
-        margin:0;
 
     }
 

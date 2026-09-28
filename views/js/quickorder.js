@@ -314,7 +314,7 @@ function refreshSummary()
 
 			$('#total-paid').text(formatPrice(s.total_paid));
 
-			
+			$('#footer-total').text(formatPrice(s.total_paid));
 
 		},
 
@@ -815,7 +815,7 @@ function resetPOS()
 
     $('#total-paid').text(formatPrice(0));
 
-   
+    $('#footer-total').text(formatPrice(0));
 
     createCart();
 
