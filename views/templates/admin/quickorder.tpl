@@ -202,23 +202,7 @@
 
             </div>
 
-            <div class="form-group">
-
-                <label>
-
-                    Carrier
-
-                </label>
-
-                <select
-
-                    id="id_carrier"
-
-                    class="form-control">
-
-                </select>
-
-            </div>
+           
 
         </div>
 
@@ -228,37 +212,23 @@
 
 <div id="footer-bar">
 
-    <div class="row">
+    <div class="footer-actions">
 
-        <div class="col-xs-6">
+        <button
+            id="btn-order-list"
+            type="button"
+            class="btn btn-default btn-lg">
+            <i class="icon-list"></i>
+            Danh sách đơn
+        </button>
 
-            <h3 id="footer-total">
-
-                0 đ
-
-            </h3>
-
-        </div>
-
-        <div class="col-xs-6 text-right">
-
-           <button
-				id="btn-create-order"
-				type="button"
-				class="btn btn-success btn-lg">
-				<i class="icon-check"></i>
-				Tạo đơn
-			</button>
-
-			<button
-				id="btn-order-list"
-				type="button"
-				class="btn btn-default btn-lg">
-				<i class="icon-list"></i>
-				Danh sách đơn
-			</button>
-
-        </div>
+        <button
+            id="btn-create-order"
+            type="button"
+            class="btn btn-success btn-lg">
+            <i class="icon-check"></i>
+            Tạo đơn
+        </button>
 
     </div>
 
